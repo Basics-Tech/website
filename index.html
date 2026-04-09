@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Basics Tech – Digital Autonomy for Everyone</title>
-  <meta name="description" content="Empowering digital autonomy through accessible Open Source technologies, prioritizing privacy and security."/>
+  <title>Basics Tech – Technology for Social Impact</title>
+  <meta name="description" content="Non-profit building open source AI tools for social impact. Bridging the gap between technology and the communities that need it most."/>
+  <link rel="alternate" hreflang="en" href="https://basicstech.org"/>
+  <link rel="alternate" hreflang="es" href="https://basicstech.org?lang=es"/>
+  <link rel="alternate" hreflang="ca" href="https://basicstech.org?lang=ca"/>
   <style>
     :root {
       --bg: #0d0f14;
@@ -20,6 +23,17 @@
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: var(--ff); line-height: 1.6; }
 
+    /* LANG */
+    [data-lang] { display: none; }
+    [data-lang].active { display: block; }
+    .lang-switch { display: flex; gap: .5rem; }
+    .lang-btn {
+      background: transparent; color: var(--muted); border: 1px solid var(--border);
+      padding: .25rem .6rem; border-radius: 4px; font-size: .75rem; cursor: pointer;
+      transition: all .2s;
+    }
+    .lang-btn.active, .lang-btn:hover { color: var(--text); border-color: var(--accent); background: rgba(108,99,255,.15); }
+
     /* NAV */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 100;
@@ -30,6 +44,7 @@
     }
     .logo { font-size: 1.2rem; font-weight: 700; color: var(--text); text-decoration: none; }
     .logo span { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
     .nav-links a:hover { color: var(--text); }
@@ -48,13 +63,14 @@
       background: radial-gradient(ellipse at 50% 0%, rgba(108,99,255,.18) 0%, transparent 65%);
     }
     .hero-badge {
-      display: inline-block; background: rgba(108,99,255,.15); color: var(--accent);
-      border: 1px solid rgba(108,99,255,.3); border-radius: 20px;
+      display: inline-block; background: rgba(0,212,170,.12); color: var(--accent2);
+      border: 1px solid rgba(0,212,170,.3); border-radius: 20px;
       padding: .3rem 1rem; font-size: .8rem; letter-spacing: .05em; margin-bottom: 1.5rem;
     }
-    .hero h1 { font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; max-width: 800px; }
+    .hero h1 { font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 800; line-height: 1.1; max-width: 850px; }
     .hero h1 em { font-style: normal; color: var(--accent); }
-    .hero p { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin: 1.5rem auto 2.5rem; }
+    .hero h1 .green { color: var(--accent2); }
+    .hero p { color: var(--muted); font-size: 1.15rem; max-width: 620px; margin: 1.5rem auto 2.5rem; }
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn-primary {
       background: var(--accent); color: #fff; padding: .75rem 2rem;
@@ -71,28 +87,50 @@
     /* STATS */
     .stats {
       display: flex; gap: 2px; flex-wrap: wrap; justify-content: center;
-      margin: 4rem auto; max-width: 800px; background: var(--border); border-radius: 12px; overflow: hidden;
+      margin: 4rem auto; max-width: 900px; background: var(--border); border-radius: 12px; overflow: hidden;
     }
-    .stat { flex: 1; min-width: 150px; background: var(--card); padding: 1.5rem; text-align: center; }
-    .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent2); }
-    .stat-label { font-size: .85rem; color: var(--muted); margin-top: .25rem; }
+    .stat { flex: 1; min-width: 140px; background: var(--card); padding: 1.5rem; text-align: center; }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--accent2); }
+    .stat-label { font-size: .8rem; color: var(--muted); margin-top: .25rem; }
 
     /* SECTIONS */
     section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
     .section-tag { color: var(--accent); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .75rem; }
     .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 1rem; }
-    .section-desc { color: var(--muted); max-width: 560px; font-size: 1rem; }
+    .section-desc { color: var(--muted); max-width: 620px; font-size: 1rem; }
 
     /* CARDS */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
     .card {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
       padding: 1.75rem; transition: border-color .25s, transform .25s;
     }
     .card:hover { border-color: var(--accent); transform: translateY(-3px); }
     .card-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .card h3 { font-size: 1.1rem; margin-bottom: .5rem; }
+    .card h3 { font-size: 1.05rem; margin-bottom: .5rem; }
     .card p { color: var(--muted); font-size: .9rem; }
+    .card .tag {
+      display: inline-block; font-size: .7rem; padding: .15rem .5rem; border-radius: 4px;
+      margin-top: .75rem; font-weight: 600;
+    }
+    .tag-live { background: rgba(0,212,170,.15); color: var(--accent2); }
+    .tag-soon { background: rgba(108,99,255,.15); color: var(--accent); }
+
+    /* PROJECT CARD */
+    .project-card {
+      background: linear-gradient(135deg, rgba(108,99,255,.08), rgba(0,212,170,.05));
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 2.5rem; margin-top: 1.5rem; transition: border-color .25s;
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-card h3 { font-size: 1.3rem; margin-bottom: .5rem; }
+    .project-card p { color: var(--muted); font-size: .95rem; margin-bottom: 1rem; }
+    .project-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .project-links a {
+      display: flex; align-items: center; gap: .4rem; font-size: .85rem;
+      color: var(--accent); text-decoration: none; transition: opacity .2s;
+    }
+    .project-links a:hover { opacity: .7; }
 
     /* MISSION */
     .mission-block {
@@ -102,19 +140,9 @@
     }
     .mission-block ul { list-style: none; margin-top: 1rem; }
     .mission-block li { color: var(--muted); padding: .5rem 0; border-bottom: 1px solid var(--border); font-size: .95rem; }
-    .mission-block li::before { content: "✓ "; color: var(--accent2); font-weight: 700; }
+    .mission-block li::before { content: "\2713  "; color: var(--accent2); font-weight: 700; }
 
-    /* OS ANNOUNCE */
-    .os-card {
-      background: linear-gradient(135deg, #1a1040, #0d1f2d);
-      border: 1px solid var(--accent); border-radius: 16px;
-      padding: 3rem; text-align: center; margin-top: 3rem;
-    }
-    .os-card .badge { background: var(--accent); color: #fff; border-radius: 4px; padding: .2rem .6rem; font-size: .75rem; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
-    .os-card h3 { font-size: 1.8rem; margin-bottom: 1rem; }
-    .os-card p { color: var(--muted); max-width: 520px; margin: 0 auto 1.5rem; }
-
-    /* LINKS */
+    /* SOCIAL */
     .social-links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 1.5rem; }
     .social-link {
       display: flex; align-items: center; gap: .5rem; background: var(--card);
@@ -132,6 +160,7 @@
     @media (max-width: 700px) {
       .mission-block { grid-template-columns: 1fr; }
       .nav-links { display: none; }
+      .stats { flex-direction: column; }
     }
   </style>
 </head>
@@ -140,118 +169,355 @@
 <!-- NAV -->
 <nav>
   <a class="logo" href="#"><span>Basics</span> Tech</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#pillars">Pillars</a></li>
-    <li><a href="#mission">Mission</a></li>
-    <li><a href="#os">Basics OS</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a class="nav-cta" href="https://github.com/Basics-Tech" target="_blank">GitHub ↗</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#areas" data-i18n-nav="areas">Areas</a></li>
+      <li><a href="#projects" data-i18n-nav="projects">Projects</a></li>
+      <li><a href="#mission" data-i18n-nav="mission">Mission</a></li>
+      <li><a href="#contact" data-i18n-nav="contact">Contact</a></li>
+    </ul>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('ca')">CA</button>
+    </div>
+    <a class="nav-cta" href="https://github.com/Basics-Tech" target="_blank">GitHub</a>
+  </div>
 </nav>
 
-<!-- HERO -->
+<!-- ==================== ENGLISH ==================== -->
+<div data-lang="en" class="active">
+
 <div class="hero">
-  <div class="hero-badge">🌍 Non-Profit Association · Catalunya, Spain · CIF G56904683</div>
-  <h1>Back to <em>Basics</em>.<br/>Digital Freedom for All.</h1>
-  <p>Empowering citizens, freelancers, and small businesses through accessible Open Source technologies — with privacy and security at the core.</p>
+  <div class="hero-badge">Non-Profit Association &middot; Catalunya, Spain &middot; CIF G56904683</div>
+  <h1>Caring for <em>society</em> with <span class="green">open source</span> technology</h1>
+  <p>We build AI tools and digital infrastructure for the communities that need it most. Transparent, accessible, and free &mdash; because technology should serve people, not the other way around.</p>
   <div class="hero-btns">
-    <a class="btn-primary" href="#mission">Our Mission</a>
+    <a class="btn-primary" href="#projects">Our Projects</a>
     <a class="btn-secondary" href="https://github.com/Basics-Tech" target="_blank">View on GitHub</a>
   </div>
 </div>
 
-<!-- STATS -->
 <div class="stats">
   <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Open Source</div></div>
-  <div class="stat"><div class="stat-num">🔒</div><div class="stat-label">Privacy First</div></div>
-  <div class="stat"><div class="stat-num">NGO</div><div class="stat-label">Non-Profit Status</div></div>
-  <div class="stat"><div class="stat-num">EU</div><div class="stat-label">Self-Sovereign ID Model</div></div>
+  <div class="stat"><div class="stat-num">AI</div><div class="stat-label">For Social Good</div></div>
+  <div class="stat"><div class="stat-num">NGO</div><div class="stat-label">Non-Profit</div></div>
+  <div class="stat"><div class="stat-num">EU</div><div class="stat-label">Based in Europe</div></div>
+  <div class="stat"><div class="stat-num">0.1%</div><div class="stat-label">Of AI investment goes to social impact</div></div>
 </div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-tag">Who we are</div>
-  <div class="section-title">Research & Open-Source DNA</div>
-  <div class="section-desc">Basics Tech is a non-profit association based in Catalunya dedicated to implementing, researching, and deploying Open Source technologies — both new and existing — to bridge the digital divide.</div>
-</section>
-
-<!-- PILLARS -->
-<section id="pillars" style="padding-top:0">
+<section id="areas">
+  <div class="section-tag">What we do</div>
+  <div class="section-title">AI and technology should work for everyone</div>
+  <div class="section-desc">We focus on the areas where technology can have the greatest social impact &mdash; and where the gap between those who have access and those who don't is growing fastest.</div>
   <div class="cards">
     <div class="card">
-      <div class="card-icon">🔬</div>
-      <h3>Research & Development</h3>
-      <p>We investigate and advance Open Source solutions to create robust, community-owned digital infrastructure.</p>
+      <div class="card-icon">&#x1F50D;</div>
+      <h3>AI Transparency &amp; Accountability</h3>
+      <p>Open source tools to audit AI systems that make decisions about people's lives. Making the EU AI Act actionable for communities, not just corporations.</p>
     </div>
     <div class="card">
-      <div class="card-icon">🤝</div>
-      <h3>For Everyone</h3>
-      <p>Providing access to technology for citizens, freelancers, and small businesses who can't afford high-cost private services.</p>
+      <div class="card-icon">&#x267F;</div>
+      <h3>Digital Accessibility</h3>
+      <p>Bridging the EU AI Act and the European Accessibility Act. Ensuring AI systems work for the 87 million people with disabilities in Europe.</p>
     </div>
     <div class="card">
-      <div class="card-icon">🔐</div>
-      <h3>Privacy & Security</h3>
-      <p>Promoting the European Self-Sovereign Identity model — your data belongs to you, not to corporations.</p>
+      <div class="card-icon">&#x1F4F1;</div>
+      <h3>Digital Literacy</h3>
+      <p>AI-powered tools to help older adults, migrants, and vulnerable communities navigate the digital world. Meet people where they are &mdash; WhatsApp, voice, their language.</p>
     </div>
     <div class="card">
-      <div class="card-icon">💡</div>
-      <h3>Digital Inclusion</h3>
-      <p>Helping NGOs and organizations lacking digital resources to access the tools they need to thrive.</p>
+      <div class="card-icon">&#x1F3E5;</div>
+      <h3>Community Health</h3>
+      <p>Training programs and digital tools for community health workers, caregivers, and local governments. Health literacy through technology.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#x1F3DB;</div>
+      <h3>Democratic AI Governance</h3>
+      <p>Platforms for citizen participation in AI policy. Monitoring tools for public AI systems. Evidence for advocacy and civil society.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#x1F4BC;</div>
+      <h3>Labour Impact of AI</h3>
+      <p>Tools to help workers and unions understand automation risk, identify transferable skills, and access retraining. Especially for workers over 45.</p>
     </div>
   </div>
 </section>
 
-<!-- MISSION -->
+<section id="projects">
+  <div class="section-tag">Our projects</div>
+  <div class="section-title">Building in the open</div>
+  <div class="section-desc">Everything we build is open source. We believe the tools to hold AI accountable should be as accessible as the AI itself.</div>
+
+  <div class="project-card">
+    <span class="tag tag-live">Live on GitHub</span>
+    <h3>eu-compliance-bridge</h3>
+    <p>The first open source toolkit that bridges EU AI Act compliance with the European Accessibility Act. Operationalizes Article 16(l) &mdash; a gap no one else has covered, open source or commercial.</p>
+    <div class="project-links">
+      <a href="https://github.com/8infinitelabs/eucompliance" target="_blank">&#x1F4BB; Repository</a>
+      <a href="https://github.com/8infinitelabs/eucompliance/blob/main/README.md" target="_blank">&#x1F4D6; Documentation</a>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">&#x1F916;</div>
+      <h3>AI Literacy Bot</h3>
+      <p>WhatsApp-based AI assistant helping vulnerable communities navigate public services, digital tools, and administrative processes. Multilingual, voice-enabled.</p>
+      <span class="tag tag-soon">Coming soon</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#x1F4CA;</div>
+      <h3>Public AI Monitor</h3>
+      <p>Dashboard for journalists, researchers, and civil society to audit whether public AI systems comply with the EU AI Act. Evidence for advocacy.</p>
+      <span class="tag tag-soon">Coming soon</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">&#x1F91D;</div>
+      <h3>Community Health Training</h3>
+      <p>AI-assisted training platform for community health programs: physiotherapy for older adults, mental health support for caregivers, wellness workshops for local governments.</p>
+      <span class="tag tag-soon">Coming soon</span>
+    </div>
+  </div>
+</section>
+
 <section id="mission">
   <div class="mission-block">
     <div>
-      <div class="section-tag">Our Mission</div>
-      <h2 class="section-title">Technology with Social Impact</h2>
-      <p style="color:var(--muted); font-size:.95rem;">At Basics Tech, we are committed to conducting research and enhancing Open Source technologies for digital services with a real social impact.</p>
+      <div class="section-tag">Our mission</div>
+      <h2 class="section-title">Why this matters now</h2>
+      <p style="color:var(--muted); font-size:.95rem;">AI is advancing faster than society can adapt. The benefits are concentrating in fewer hands. The communities most affected by automation have the least access to the tools shaping their future. We're here to change that.</p>
       <ul>
-        <li>Empower individuals with digital autonomy</li>
-        <li>Boost productivity for citizens & small businesses</li>
-        <li>Ensure data privacy and security by design</li>
-        <li>Support NGOs with free digital services</li>
-        <li>Follow EU Self-Sovereign Identity principles</li>
+        <li>Less than 0.1% of AI investment goes to social impact</li>
+        <li>87 million Europeans with disabilities are excluded from AI design</li>
+        <li>57% of working hours are automatable with current technology</li>
+        <li>The EU AI Act deadline for high-risk systems is August 2026</li>
+        <li>Open source is infrastructure, not charity</li>
       </ul>
     </div>
-    <div style="text-align:center; font-size:6rem; line-height:1;">🦊</div>
+    <div style="text-align:center; font-size:5rem; line-height:1;">&#x1F30D;</div>
   </div>
 </section>
 
-<!-- BASICS OS -->
-<section id="os">
-  <div class="section-tag">Coming Soon</div>
-  <div class="section-title">Basics OS</div>
-  <div class="section-desc">A real alternative to the dominant mobile platforms — built on Firefox OS principles, designed to put control back in your hands.</div>
-  <div class="os-card">
-    <div class="badge">🚀 In Development</div>
-    <h3>Basics OS is Coming!</h3>
-    <p>Based on Firefox OS, we're building a mobile operating system that offers a true alternative to iOS and Android — platforms controlled by the world's most powerful corporations. We believe in empowering individuals with full control over their digital lives.</p>
-    <a class="btn-primary" href="https://github.com/Basics-Tech" target="_blank">Follow Progress on GitHub</a>
-  </div>
-</section>
-
-<!-- CONTACT / SOCIAL -->
 <section id="contact" style="text-align:center">
-  <div class="section-tag">Get Involved</div>
-  <div class="section-title">Join the Community</div>
-  <div class="section-desc" style="margin: 0 auto 1rem;">Connect with us, contribute, or just say hello.</div>
+  <div class="section-tag">Get involved</div>
+  <div class="section-title">Join us</div>
+  <div class="section-desc" style="margin:0 auto 1rem;">We're looking for collaborators, partners, and organizations who share our mission.</div>
   <div class="social-links">
-    <a class="social-link" href="https://github.com/Basics-Tech" target="_blank">🐙 GitHub</a>
-    <a class="social-link" href="https://matrix.to/#/#basicstech:matrix.org" target="_blank">💬 Element / Matrix</a>
-    <a class="social-link" href="https://t.me/+qvMmFyRUGRBhZGI0" target="_blank">✈️ Telegram</a>
-    <a class="social-link" href="mailto:hello@infinitelabs.co">📧 Email</a>
+    <a class="social-link" href="https://github.com/Basics-Tech" target="_blank">&#x1F419; GitHub</a>
+    <a class="social-link" href="https://www.linkedin.com/company/basics-tech" target="_blank">&#x1F4BC; LinkedIn</a>
+    <a class="social-link" href="mailto:hello@basicstech.org">&#x1F4E7; hello@basicstech.org</a>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <p>© Basics Tech · Non-Profit Association · CIF G56904683 · Catalunya, Spain</p>
-  <p style="margin-top:.5rem;">Built with ❤️ and Open Source</p>
+  <p>&copy; 2026 Basics Tech &middot; Non-Profit Association &middot; CIF G56904683 &middot; Barcelona, Catalunya</p>
+  <p style="margin-top:.5rem;">Built with open source. For everyone.</p>
 </footer>
+
+</div><!-- /en -->
+
+<!-- ==================== SPANISH ==================== -->
+<div data-lang="es">
+
+<div class="hero">
+  <div class="hero-badge">Asociaci&oacute;n sin &aacute;nimo de lucro &middot; Catalunya, Espa&ntilde;a &middot; CIF G56904683</div>
+  <h1>Cuidando la <em>sociedad</em> con tecnolog&iacute;a <span class="green">open source</span></h1>
+  <p>Construimos herramientas de IA e infraestructura digital para las comunidades que m&aacute;s lo necesitan. Transparentes, accesibles y libres &mdash; porque la tecnolog&iacute;a debe servir a las personas.</p>
+  <div class="hero-btns">
+    <a class="btn-primary" href="#projects">Nuestros proyectos</a>
+    <a class="btn-secondary" href="https://github.com/Basics-Tech" target="_blank">Ver en GitHub</a>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Open Source</div></div>
+  <div class="stat"><div class="stat-num">IA</div><div class="stat-label">Para el bien com&uacute;n</div></div>
+  <div class="stat"><div class="stat-num">ONG</div><div class="stat-label">Sin &aacute;nimo de lucro</div></div>
+  <div class="stat"><div class="stat-num">UE</div><div class="stat-label">Con base en Europa</div></div>
+  <div class="stat"><div class="stat-num">0,1%</div><div class="stat-label">De la inversi&oacute;n en IA va a impacto social</div></div>
+</div>
+
+<section>
+  <div class="section-tag">Qu&eacute; hacemos</div>
+  <div class="section-title">La IA y la tecnolog&iacute;a deben funcionar para todos</div>
+  <div class="section-desc">Nos enfocamos en las &aacute;reas donde la tecnolog&iacute;a puede tener mayor impacto social &mdash; y donde la brecha entre quienes tienen acceso y quienes no crece m&aacute;s r&aacute;pido.</div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">&#x1F50D;</div><h3>Transparencia y auditor&iacute;a de IA</h3><p>Herramientas open source para auditar sistemas de IA que toman decisiones sobre la vida de las personas. Haciendo que el EU AI Act sea operativo para comunidades, no solo corporaciones.</p></div>
+    <div class="card"><div class="card-icon">&#x267F;</div><h3>Accesibilidad digital</h3><p>Conectando el EU AI Act con la Ley Europea de Accesibilidad. Asegurando que los sistemas de IA funcionen para los 87 millones de personas con discapacidad en Europa.</p></div>
+    <div class="card"><div class="card-icon">&#x1F4F1;</div><h3>Alfabetizaci&oacute;n digital</h3><p>Herramientas con IA para ayudar a personas mayores, migrantes y colectivos vulnerables a navegar el mundo digital. Llegar donde est&aacute;n: WhatsApp, voz, su idioma.</p></div>
+    <div class="card"><div class="card-icon">&#x1F3E5;</div><h3>Salud comunitaria</h3><p>Programas de formaci&oacute;n y herramientas digitales para salud comunitaria, cuidadores y gobiernos locales. Cultura de salud a trav&eacute;s de la tecnolog&iacute;a.</p></div>
+    <div class="card"><div class="card-icon">&#x1F3DB;</div><h3>Gobernanza democr&aacute;tica de la IA</h3><p>Plataformas de participaci&oacute;n ciudadana en pol&iacute;ticas de IA. Herramientas de monitorizaci&oacute;n de sistemas p&uacute;blicos. Evidencia para advocacy y sociedad civil.</p></div>
+    <div class="card"><div class="card-icon">&#x1F4BC;</div><h3>Impacto laboral de la IA</h3><p>Herramientas para que trabajadores y sindicatos entiendan el riesgo de automatizaci&oacute;n, identifiquen competencias transferibles y accedan a recursos de reconversi&oacute;n.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">Nuestros proyectos</div>
+  <div class="section-title">Construyendo en abierto</div>
+  <div class="section-desc">Todo lo que construimos es open source. Creemos que las herramientas para exigir responsabilidad a la IA deben ser tan accesibles como la propia IA.</div>
+  <div class="project-card">
+    <span class="tag tag-live">En GitHub</span>
+    <h3>eu-compliance-bridge</h3>
+    <p>El primer toolkit open source que conecta el cumplimiento del EU AI Act con la Ley Europea de Accesibilidad. Operacionaliza el Art&iacute;culo 16(l) &mdash; un hueco que nadie ha cubierto.</p>
+    <div class="project-links">
+      <a href="https://github.com/8infinitelabs/eucompliance" target="_blank">&#x1F4BB; Repositorio</a>
+      <a href="https://github.com/8infinitelabs/eucompliance/blob/main/README.md" target="_blank">&#x1F4D6; Documentaci&oacute;n</a>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">&#x1F916;</div><h3>Bot de alfabetizaci&oacute;n digital</h3><p>Asistente IA por WhatsApp para comunidades vulnerables: tr&aacute;mites, servicios p&uacute;blicos, herramientas digitales. Multiling&uuml;e, con voz.</p><span class="tag tag-soon">Pr&oacute;ximamente</span></div>
+    <div class="card"><div class="card-icon">&#x1F4CA;</div><h3>Monitor de IA P&uacute;blica</h3><p>Dashboard para periodistas, investigadores y sociedad civil para auditar sistemas de IA p&uacute;blicos seg&uacute;n el EU AI Act.</p><span class="tag tag-soon">Pr&oacute;ximamente</span></div>
+    <div class="card"><div class="card-icon">&#x1F91D;</div><h3>Formaci&oacute;n en salud comunitaria</h3><p>Plataforma con IA para programas de salud comunitaria: fisioterapia preventiva, salud mental para cuidadores, talleres de bienestar para ayuntamientos.</p><span class="tag tag-soon">Pr&oacute;ximamente</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="mission-block">
+    <div>
+      <div class="section-tag">Nuestra misi&oacute;n</div>
+      <h2 class="section-title">Por qu&eacute; esto importa ahora</h2>
+      <p style="color:var(--muted); font-size:.95rem;">La IA avanza m&aacute;s r&aacute;pido de lo que la sociedad puede adaptarse. Los beneficios se concentran en menos manos. Las comunidades m&aacute;s afectadas por la automatizaci&oacute;n son las que menos acceso tienen a las herramientas que moldean su futuro.</p>
+      <ul>
+        <li>Menos del 0,1% de la inversi&oacute;n en IA va a impacto social</li>
+        <li>87 millones de europeos con discapacidad excluidos del dise&ntilde;o de IA</li>
+        <li>El 57% de las horas trabajadas son automatizables con tecnolog&iacute;a actual</li>
+        <li>El deadline del EU AI Act para sistemas de alto riesgo es agosto 2026</li>
+        <li>El open source es infraestructura, no caridad</li>
+      </ul>
+    </div>
+    <div style="text-align:center; font-size:5rem; line-height:1;">&#x1F30D;</div>
+  </div>
+</section>
+
+<section style="text-align:center">
+  <div class="section-tag">Participa</div>
+  <div class="section-title">&Uacute;nete</div>
+  <div class="section-desc" style="margin:0 auto 1rem;">Buscamos colaboradores, partners y organizaciones que compartan nuestra misi&oacute;n.</div>
+  <div class="social-links">
+    <a class="social-link" href="https://github.com/Basics-Tech" target="_blank">&#x1F419; GitHub</a>
+    <a class="social-link" href="https://www.linkedin.com/company/basics-tech" target="_blank">&#x1F4BC; LinkedIn</a>
+    <a class="social-link" href="mailto:hello@basicstech.org">&#x1F4E7; hello@basicstech.org</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Basics Tech &middot; Asociaci&oacute;n sin &aacute;nimo de lucro &middot; CIF G56904683 &middot; Barcelona, Catalunya</p>
+  <p style="margin-top:.5rem;">Hecho con open source. Para todos.</p>
+</footer>
+
+</div><!-- /es -->
+
+<!-- ==================== CATALAN ==================== -->
+<div data-lang="ca">
+
+<div class="hero">
+  <div class="hero-badge">Associaci&oacute; sense &agrave;nim de lucre &middot; Catalunya &middot; CIF G56904683</div>
+  <h1>Cuidant la <em>societat</em> amb tecnologia <span class="green">open source</span></h1>
+  <p>Constru&iuml;m eines d'IA i infraestructura digital per a les comunitats que m&eacute;s ho necessiten. Transparents, accessibles i lliures &mdash; perqu&egrave; la tecnologia ha de servir les persones.</p>
+  <div class="hero-btns">
+    <a class="btn-primary" href="#projects">Els nostres projectes</a>
+    <a class="btn-secondary" href="https://github.com/Basics-Tech" target="_blank">Veure a GitHub</a>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Open Source</div></div>
+  <div class="stat"><div class="stat-num">IA</div><div class="stat-label">Pel b&eacute; com&uacute;</div></div>
+  <div class="stat"><div class="stat-num">ONG</div><div class="stat-label">Sense &agrave;nim de lucre</div></div>
+  <div class="stat"><div class="stat-num">UE</div><div class="stat-label">Amb base a Europa</div></div>
+  <div class="stat"><div class="stat-num">0,1%</div><div class="stat-label">De la inversi&oacute; en IA va a impacte social</div></div>
+</div>
+
+<section>
+  <div class="section-tag">Qu&egrave; fem</div>
+  <div class="section-title">La IA i la tecnologia han de funcionar per a tothom</div>
+  <div class="section-desc">Ens centrem en les &agrave;rees on la tecnologia pot tenir m&eacute;s impacte social &mdash; i on la bretxa entre qui t&eacute; acc&eacute;s i qui no creix m&eacute;s r&agrave;pid.</div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">&#x1F50D;</div><h3>Transpar&egrave;ncia i auditoria d'IA</h3><p>Eines open source per auditar sistemes d'IA que prenen decisions sobre la vida de les persones. Fent que l'EU AI Act sigui operatiu per a comunitats, no nom&eacute;s corporacions.</p></div>
+    <div class="card"><div class="card-icon">&#x267F;</div><h3>Accessibilitat digital</h3><p>Connectant l'EU AI Act amb la Llei Europea d'Accessibilitat. Assegurant que els sistemes d'IA funcionin per als 87 milions de persones amb discapacitat a Europa.</p></div>
+    <div class="card"><div class="card-icon">&#x1F4F1;</div><h3>Alfabetitzaci&oacute; digital</h3><p>Eines amb IA per ajudar a gent gran, migrants i col&middot;lectius vulnerables a navegar el m&oacute;n digital. Arribar on s&oacute;n: WhatsApp, veu, el seu idioma.</p></div>
+    <div class="card"><div class="card-icon">&#x1F3E5;</div><h3>Salut comunit&agrave;ria</h3><p>Programes de formaci&oacute; i eines digitals per a salut comunit&agrave;ria, cuidadors i governs locals. Cultura de salut a trav&eacute;s de la tecnologia.</p></div>
+    <div class="card"><div class="card-icon">&#x1F3DB;</div><h3>Governan&ccedil;a democr&agrave;tica de la IA</h3><p>Plataformes de participaci&oacute; ciutadana en pol&iacute;tiques d'IA. Eines de monitoritzaci&oacute; de sistemes p&uacute;blics. Evid&egrave;ncia per a advocacy i societat civil.</p></div>
+    <div class="card"><div class="card-icon">&#x1F4BC;</div><h3>Impacte laboral de la IA</h3><p>Eines perqu&egrave; treballadors i sindicats entenguin el risc d'automatitzaci&oacute;, identifiquin compet&egrave;ncies transferibles i accedeixin a recursos de reconversi&oacute;.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">Els nostres projectes</div>
+  <div class="section-title">Construint en obert</div>
+  <div class="section-desc">Tot el que constru&iuml;m &eacute;s open source. Creiem que les eines per exigir responsabilitat a la IA han de ser tan accessibles com la pr&ograve;pia IA.</div>
+  <div class="project-card">
+    <span class="tag tag-live">A GitHub</span>
+    <h3>eu-compliance-bridge</h3>
+    <p>El primer toolkit open source que connecta el compliment de l'EU AI Act amb la Llei Europea d'Accessibilitat. Operacionalitza l'Article 16(l) &mdash; un buit que ning&uacute; ha cobert.</p>
+    <div class="project-links">
+      <a href="https://github.com/8infinitelabs/eucompliance" target="_blank">&#x1F4BB; Repositori</a>
+      <a href="https://github.com/8infinitelabs/eucompliance/blob/main/README.md" target="_blank">&#x1F4D6; Documentaci&oacute;</a>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">&#x1F916;</div><h3>Bot d'alfabetitzaci&oacute; digital</h3><p>Assistent IA per WhatsApp per a comunitats vulnerables: tr&agrave;mits, serveis p&uacute;blics, eines digitals. Multiling&uuml;e, amb veu.</p><span class="tag tag-soon">Properament</span></div>
+    <div class="card"><div class="card-icon">&#x1F4CA;</div><h3>Monitor d'IA P&uacute;blica</h3><p>Dashboard per a periodistes, investigadors i societat civil per auditar sistemes d'IA p&uacute;blics segons l'EU AI Act.</p><span class="tag tag-soon">Properament</span></div>
+    <div class="card"><div class="card-icon">&#x1F91D;</div><h3>Formaci&oacute; en salut comunit&agrave;ria</h3><p>Plataforma amb IA per a programes de salut comunit&agrave;ria: fisioteràpia preventiva, salut mental per a cuidadors, tallers de benestar per a ajuntaments.</p><span class="tag tag-soon">Properament</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="mission-block">
+    <div>
+      <div class="section-tag">La nostra missi&oacute;</div>
+      <h2 class="section-title">Per qu&egrave; aix&ograve; importa ara</h2>
+      <p style="color:var(--muted); font-size:.95rem;">La IA avan&ccedil;a m&eacute;s r&agrave;pid del que la societat pot adaptar-se. Els beneficis es concentren en menys mans. Les comunitats m&eacute;s afectades per l'automatitzaci&oacute; s&oacute;n les que menys acc&eacute;s tenen a les eines que modelen el seu futur.</p>
+      <ul>
+        <li>Menys del 0,1% de la inversi&oacute; en IA va a impacte social</li>
+        <li>87 milions d'europeus amb discapacitat exclosos del disseny d'IA</li>
+        <li>El 57% de les hores treballades s&oacute;n automatitzables amb tecnologia actual</li>
+        <li>El deadline de l'EU AI Act per a sistemes d'alt risc &eacute;s agost 2026</li>
+        <li>L'open source &eacute;s infraestructura, no caritat</li>
+      </ul>
+    </div>
+    <div style="text-align:center; font-size:5rem; line-height:1;">&#x1F30D;</div>
+  </div>
+</section>
+
+<section style="text-align:center">
+  <div class="section-tag">Participa</div>
+  <div class="section-title">Uneix-t'hi</div>
+  <div class="section-desc" style="margin:0 auto 1rem;">Busquem col&middot;laboradors, partners i organitzacions que comparteixin la nostra missi&oacute;.</div>
+  <div class="social-links">
+    <a class="social-link" href="https://github.com/Basics-Tech" target="_blank">&#x1F419; GitHub</a>
+    <a class="social-link" href="https://www.linkedin.com/company/basics-tech" target="_blank">&#x1F4BC; LinkedIn</a>
+    <a class="social-link" href="mailto:hello@basicstech.org">&#x1F4E7; hello@basicstech.org</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Basics Tech &middot; Associaci&oacute; sense &agrave;nim de lucre &middot; CIF G56904683 &middot; Barcelona, Catalunya</p>
+  <p style="margin-top:.5rem;">Fet amb open source. Per a tothom.</p>
+</footer>
+
+</div><!-- /ca -->
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('[data-lang]').forEach(el => el.classList.remove('active'));
+  document.querySelector('[data-lang="' + lang + '"]').classList.add('active');
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector('.lang-btn[onclick*="' + lang + '"]').classList.add('active');
+  document.documentElement.lang = lang;
+  localStorage.setItem('lang', lang);
+}
+// Auto-detect language
+(function() {
+  var saved = localStorage.getItem('lang');
+  if (saved) { setLang(saved); return; }
+  var nav = navigator.language || '';
+  if (nav.startsWith('ca')) setLang('ca');
+  else if (nav.startsWith('es')) setLang('es');
+  else setLang('en');
+})();
+</script>
 
 </body>
 </html>
